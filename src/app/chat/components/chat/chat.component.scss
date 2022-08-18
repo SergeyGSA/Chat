@@ -1,0 +1,46 @@
+@import 'src/app/chat/styles/variables.scss';
+@import 'src/app/chat/styles/mixins.scss';
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.left {
+  height: 100%;
+  background-color: $grey;
+  border-right: 1px solid #a4a4a4;
+  padding: 20px;
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+
+    &-user {
+      @include roundedPhoto;
+    }
+  }
+}
+
+.right {
+  background-color: $grey;
+  display: flex;
+  align-items: center;
+
+  &__img {
+    @include roundedPhoto;
+  }
+
+  &__heading {
+    margin-left: 10px;
+    font-weight: 700;
+  }
+}
+
+.user-photo-wrapper {
+  @include roundedPhoto;
+  @include circleCheck;
+}
