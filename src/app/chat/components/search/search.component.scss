@@ -11,9 +11,11 @@
   background-repeat: no-repeat;
   background-position: 10px 10px;
   background-size: 14px;
+  font-family: 'Montserrat', sans-serif;
 
   &::placeholder {
     color: $dark-grey;
+    font-family: 'Montserrat', sans-serif;
   }
 }
 
