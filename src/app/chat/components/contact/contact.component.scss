@@ -1,0 +1,51 @@
+@import 'src/app/chat/styles/variables.scss';
+@import 'src/app/chat/styles/mixins.scss';
+
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 10px;
+  border-bottom: 1px solid #a4a4a4;
+  cursor: pointer;
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__img {
+    @include roundedPhoto;
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+
+    &-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    &-message {
+      max-width: 300px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 16px;
+      font-weight: 300;
+    }
+  }
+
+  &__date {
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+.user-photo-wrapper {
+  @include circleCheck;
+}
