@@ -72,6 +72,13 @@
 
   &__history {
     padding: 20px;
+    height: calc(100vh - 80px - 113px);
+  }
+
+  &__message-input {
+    border-top: 1px solid #a4a4a4;
+    background-color: $grey;
+    padding: 25px 15px;
   }
 }
 

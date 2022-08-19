@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  justify-content: center;
+
+  &__input {
+    border: 0;
+    outline: none;
+    width: 950px;
+    border-radius: 30px;
+    padding: 20px 20px;
+    background-image: url('../../../../assets/imgs/arrow.svg');
+    background-repeat: no-repeat;
+    background-position: 900px center;
+    background-size: 30px;
+    padding-right: 70px;
+  }
+
+  &__input,
+  &__input::placeholder {
+    font-family: 'Montserrat, sans-serif';
+    font-size: 18px;
+  }
+}
