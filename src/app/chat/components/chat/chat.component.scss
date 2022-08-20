@@ -73,7 +73,22 @@
   &__history {
     padding: 20px;
     height: calc(100vh - 80px - 113px);
+    overflow-y: auto;
   }
+
+  // ======== Custom scrollbar =========
+  &__history::-webkit-scrollbar {
+    width: 0.6vw;
+  }
+
+  &__history::-webkit-scrollbar-thumb {
+    background-color: $dark-grey;
+  }
+
+  &__history::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  // ======== /Custom scrollbar =========
 
   &__message-input {
     border-top: 1px solid #a4a4a4;
