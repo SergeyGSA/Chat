@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
+import {IChat} from '../../types/chat.interface'
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent implements OnInit {
+  @Input()
+  public chat!: IChat
 
-  constructor() { }
+  @Output()
+  public chatId = new EventEmitter<number>()
 
-  ngOnInit(): void {
+  constructor() {}
+
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {}
+
+  protected openHistory(id: number): void {
+    this.chatId.emit(id)
   }
-
 }

@@ -8,6 +8,11 @@
   padding: 20px 10px;
   border-bottom: 1px solid #a4a4a4;
   cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: $light-grey;
+  }
 
   &-wrapper {
     display: flex;

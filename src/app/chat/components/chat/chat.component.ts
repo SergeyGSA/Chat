@@ -10,6 +10,7 @@ import {IChat} from '../../types/chat.interface'
 })
 export class ChatComponent implements OnInit {
   protected chats$: Observable<IChat[]>
+  protected chat$!: Observable<IChat>
 
   constructor(private readonly chatService: ChatService) {
     this.chats$ = this.chatService.getChats()
@@ -17,4 +18,8 @@ export class ChatComponent implements OnInit {
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
+
+  protected getChatId(id: number) {
+    this.chat$ = this.chatService.getChatBtId(id)
+  }
 }

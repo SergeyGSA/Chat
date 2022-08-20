@@ -8,16 +8,11 @@ import {IChat} from '../../types/chat.interface'
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent implements OnInit {
-  protected chat!: IChat
-
   @Input()
-  public chats$?: Observable<IChat[]>
+  public chat$?: Observable<IChat>
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.chats$?.subscribe((data) => {
-      this.chat = data.filter((val) => val.name === 'Eric Cartman')[0]
-    })
-  }
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {}
 }

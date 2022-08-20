@@ -8,7 +8,6 @@ import {Component, OnInit} from '@angular/core'
 export class SearchComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('work')
-  }
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {}
 }

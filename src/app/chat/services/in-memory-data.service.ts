@@ -36,25 +36,17 @@ export class InMemoryDataService implements InMemoryDbService {
           'https://www.peoples.ru/art/music/electronic/armin_van_buuren/Us1hRvMZr4K33.jpeg',
         history: [
           {
-            text: 'You are very fat, Eric!',
+            text: 'You are awesome, Armin!',
             date: 1516239022,
             direction: 'from',
           },
           {
-            text: "I'm not fat, I'm big-boned!",
+            text: 'Thanks man!',
             date: 1516239034,
             direction: 'to',
           },
         ],
       },
-      // {id: 13, name: 'Bombasto'},
-      // {id: 14, name: 'Celeritas'},
-      // {id: 15, name: 'Magneta'},
-      // {id: 16, name: 'RubberMan'},
-      // {id: 17, name: 'Dynama'},
-      // {id: 18, name: 'Dr. IQ'},
-      // {id: 19, name: 'Magma'},
-      // {id: 20, name: 'Tornado'},
     ]
     return {chats}
   }

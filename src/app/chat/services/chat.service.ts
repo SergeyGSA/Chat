@@ -10,7 +10,11 @@ import {IChat} from '../types/chat.interface'
 export class ChatService {
   constructor(private readonly http: HttpClient) {}
 
-  getChats(): Observable<IChat[]> {
+  public getChats(): Observable<IChat[]> {
     return this.http.get<IChat[]>(`${environment.API_URL}chats`)
+  }
+
+  public getChatBtId(id: number): Observable<IChat> {
+    return this.http.get<IChat>(`${environment.API_URL}chats/${id}`)
   }
 }
