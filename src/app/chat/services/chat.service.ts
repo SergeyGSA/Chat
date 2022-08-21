@@ -14,7 +14,7 @@ export class ChatService {
     return this.http.get<IChat[]>(`${environment.API_URL}chats`)
   }
 
-  public getChatBtId(id: number): Observable<IChat> {
+  public getChatById(id: number): Observable<IChat> {
     return this.http.get<IChat>(`${environment.API_URL}chats/${id}`)
   }
 }

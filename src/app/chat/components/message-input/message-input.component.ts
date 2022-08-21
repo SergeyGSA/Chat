@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, Input, OnInit} from '@angular/core'
 
 @Component({
   selector: 'app-message-input',
@@ -8,7 +8,6 @@ import {Component, OnInit} from '@angular/core'
 export class MessageInputComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {
-    console.log()
-  }
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {}
 }

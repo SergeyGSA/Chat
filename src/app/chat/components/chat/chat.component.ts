@@ -20,6 +20,6 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {}
 
   protected getChatId(id: number) {
-    this.chat$ = this.chatService.getChatBtId(id)
+    this.chat$ = this.chatService.getChatById(id)
   }
 }
