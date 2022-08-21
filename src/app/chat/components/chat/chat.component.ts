@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import {Observable} from 'rxjs'
 import {ChatService} from '../../services/chat.service'
-import {IChat} from '../../types/chat.interface'
+import {IChat, IMessage} from '../../types/chat.interface'
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +19,20 @@ export class ChatComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
-  protected getChatId(id: number) {
+  protected getChatById(id: string) {
     this.chat$ = this.chatService.getChatById(id)
+  }
+
+  protected sendMessage(message: IMessage) {
+    this.chat$.subscribe((chat: IChat) => {
+      const updatedChat: IChat = {
+        id: chat.id,
+        name: chat.name,
+        photo: chat.photo,
+        history: [...chat.history, message],
+      }
+
+      this.chatService.sendMessage(updatedChat).subscribe()
+    })
   }
 }

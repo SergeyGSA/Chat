@@ -1,3 +1,8 @@
 <form class="form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-  <input type="text" class="form__input" placeholder="Type your message" />
+  <input
+    type="text"
+    class="form__input"
+    placeholder="Type your message"
+    formControlName="message"
+  />
 </form>

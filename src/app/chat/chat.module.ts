@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
 import {HttpClientModule} from '@angular/common/http'
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api'
-import {InMemoryDataService} from './services/in-memory-data.service'
 import {ReactiveFormsModule} from '@angular/forms'
 
 import {ChatComponent} from 'src/app/chat/components/chat/chat.component'
@@ -19,13 +17,6 @@ import {MessageInputComponent} from './components/message-input/message-input.co
     MessageComponent,
     MessageInputComponent,
   ],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false,
-    }),
-  ],
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
 })
 export class ChatModule {}

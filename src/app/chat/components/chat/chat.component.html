@@ -15,7 +15,7 @@
       <app-contact
         *ngFor="let chat of chats$ | async"
         [chat]="chat"
-        (chatId)="getChatId($event)"
+        (chatId)="getChatById($event)"
       ></app-contact>
     </div>
   </div>
@@ -30,7 +30,6 @@
         />
       </div>
       <span class="right__top-heading">
-        <!-- Eric Cartman -->
         {{ (chat$ | async)?.name }}
       </span>
     </div>
@@ -39,7 +38,7 @@
       <app-message [chat$]="chat$"></app-message>
     </div>
     <div class="right__message-input">
-      <app-message-input></app-message-input>
+      <app-message-input (newMessage)="sendMessage($event)"></app-message-input>
     </div>
   </div>
 </div>

@@ -11,14 +11,14 @@ export class ContactComponent implements OnInit {
   public chat!: IChat
 
   @Output()
-  public chatId = new EventEmitter<number>()
+  public chatId = new EventEmitter<string>()
 
   constructor() {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
-  protected openHistory(id: number): void {
+  protected openHistory(id: string): void {
     this.chatId.emit(id)
   }
 }
