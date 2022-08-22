@@ -1,9 +1,18 @@
 import {Injectable} from '@angular/core'
 import {HttpClient, HttpHeaders} from '@angular/common/http'
-import {Observable} from 'rxjs'
+import {map, Observable} from 'rxjs'
 import {environment} from 'src/environments/environment'
 import {IChat} from '../types/chat.interface'
 
+interface IJoke {
+  categories: unknown[]
+  created_at: string
+  icon_url: string
+  id: string
+  updated_at: string
+  url: string
+  value: string
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -30,11 +39,10 @@ export class ChatService {
     )
   }
 
-  public createChat(chat: IChat) {
-    return this.http.post<IChat>(
-      `${environment.API_URL}chats`,
-      chat,
-      this.httpOptions
-    )
+  // Generates a random joke from https://api.chucknorris.io
+  public getChuckNorrisJoke(): Observable<string> {
+    return this.http
+      .get<IJoke>(`https://api.chucknorris.io/jokes/random`)
+      .pipe(map((joke: IJoke) => joke.value))
   }
 }

@@ -8,7 +8,7 @@ import {IChat} from '../../types/chat.interface'
 })
 export class ContactComponent implements OnInit {
   @Input()
-  public chat!: IChat
+  public contact!: IChat
 
   @Output()
   public chatId = new EventEmitter<string>()

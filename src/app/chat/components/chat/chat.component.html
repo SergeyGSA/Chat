@@ -13,8 +13,8 @@
     <div class="left__chats">
       <span class="left__chats-heading">Chats</span>
       <app-contact
-        *ngFor="let chat of chats$ | async"
-        [chat]="chat"
+        *ngFor="let contact of chats$ | async"
+        [contact]="contact"
         (chatId)="getChatById($event)"
       ></app-contact>
     </div>
@@ -35,7 +35,14 @@
     </div>
 
     <div class="right__history">
-      <app-message [chat$]="chat$"></app-message>
+      <!-- <app-message [chat$]="chat$"></app-message> -->
+      <ng-container *ngIf="chat$ | async as chat">
+        <app-message
+          *ngFor="let message of chat.history"
+          [message]="message"
+          [chat]="chat"
+        ></app-message>
+      </ng-container>
     </div>
     <div class="right__message-input">
       <app-message-input (newMessage)="sendMessage($event)"></app-message-input>

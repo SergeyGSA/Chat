@@ -1,24 +1,26 @@
-<div class="contact" (click)="openHistory(chat.id)">
+<div class="contact" (click)="openHistory(contact.id)">
   <div class="contact-wrapper">
     <div class="user-photo-wrapper">
       <img
         class="contact__img"
-        [src]="chat.photo ? chat.photo : '../../../../assets/imgs/user.png'"
+        [src]="
+          contact.photo ? contact.photo : '../../../../assets/imgs/user.png'
+        "
         alt=""
       />
     </div>
 
     <div class="contact__data">
-      <span class="contact__data-name">{{ chat.name }}</span>
+      <span class="contact__data-name">{{ contact.name }}</span>
       <span class="contact__data-message">
         <!-- Get a last message from array of messages -->
-        {{ chat.history.slice(-1)[0].text }}
+        {{ contact.history.slice(-1)[0].text }}
       </span>
     </div>
   </div>
 
   <div class="contact__date">
     <!-- Get a date of last message from array of messages -->
-    <span>{{ chat.history.slice(-1)[0].date | date }}</span>
+    <span>{{ contact.history.slice(-1)[0].date | date }}</span>
   </div>
 </div>

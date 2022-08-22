@@ -22,17 +22,23 @@ export class ChatComponent implements OnInit {
   protected getChatById(id: string) {
     this.chat$ = this.chatService.getChatById(id)
   }
-
-  protected sendMessage(message: IMessage) {
-    this.chat$.subscribe((chat: IChat) => {
-      const updatedChat: IChat = {
-        id: chat.id,
-        name: chat.name,
-        photo: chat.photo,
-        history: [...chat.history, message],
-      }
-
-      this.chatService.sendMessage(updatedChat).subscribe()
-    })
+  // TODO:
+  protected sendMessage(message: IMessage): void {
+    // this.chat$.subscribe((chat: IChat) => {
+    //   const updatedChat: IChat = {
+    //     id: chat.id,
+    //     name: chat.name,
+    //     photo: chat.photo,
+    //     history: [...chat.history, message],
+    //   }
+    //   // console.log(updatedChat)
+    //   this.chatService
+    //     .sendMessage(updatedChat)
+    //     .subscribe((data) => console.log(data))
+    // })
   }
+
+  // private generateChuckNorrisJoke(): void {
+  //   this.chatService.getChuckNorrisJoke().subscribe((data) => console.log(data))
+  // }
 }

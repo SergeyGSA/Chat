@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core'
-import {Observable} from 'rxjs'
-import {IChat} from '../../types/chat.interface'
+import {IChat, IMessage} from '../../types/chat.interface'
 
 @Component({
   selector: 'app-message',
@@ -9,7 +8,10 @@ import {IChat} from '../../types/chat.interface'
 })
 export class MessageComponent implements OnInit {
   @Input()
-  public chat$?: Observable<IChat>
+  public message!: IMessage
+
+  @Input()
+  public chat!: IChat
 
   constructor() {}
 
