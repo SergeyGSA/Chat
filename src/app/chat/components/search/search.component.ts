@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnInit, Output, EventEmitter} from '@angular/core'
 
 @Component({
   selector: 'app-search',
@@ -6,8 +6,16 @@ import {Component, OnInit} from '@angular/core'
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
+  @Output()
+  public searchValueEvent = new EventEmitter<string>()
+
   constructor() {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
+
+  protected searchContact(event: Event): void {
+    const target = event.target as HTMLInputElement
+    this.searchValueEvent.emit(target.value)
+  }
 }

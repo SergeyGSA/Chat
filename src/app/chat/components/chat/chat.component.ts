@@ -11,6 +11,7 @@ import {IChat, IMessage} from '../../types/chat.interface'
 export class ChatComponent implements OnInit {
   protected chats$: Observable<IChat[]>
   protected chat$!: Observable<IChat>
+  protected searchedContact: string = ''
 
   constructor(private readonly chatService: ChatService) {
     this.chats$ = this.chatService.getChats()
@@ -36,6 +37,10 @@ export class ChatComponent implements OnInit {
     //     .sendMessage(updatedChat)
     //     .subscribe((data) => console.log(data))
     // })
+  }
+
+  protected searchContact(searchValue: string) {
+    this.searchedContact = searchValue
   }
 
   // private generateChuckNorrisJoke(): void {

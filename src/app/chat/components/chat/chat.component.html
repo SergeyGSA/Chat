@@ -8,15 +8,20 @@
           class="left__top-user"
         />
       </div>
-      <app-search></app-search>
+      <app-search (searchValueEvent)="searchContact($event)"></app-search>
     </div>
     <div class="left__chats">
       <span class="left__chats-heading">Chats</span>
-      <app-contact
-        *ngFor="let contact of chats$ | async"
-        [contact]="contact"
-        (chatId)="getChatById($event)"
-      ></app-contact>
+      <ng-container *ngFor="let contact of chats$ | async">
+        <app-contact
+          *ngIf="
+            searchedContact === '' ||
+            contact.name.toLowerCase().includes(searchedContact)
+          "
+          [contact]="contact"
+          (chatId)="getChatById($event)"
+        ></app-contact>
+      </ng-container>
     </div>
   </div>
 
