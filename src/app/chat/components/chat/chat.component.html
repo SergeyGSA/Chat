@@ -40,14 +40,22 @@
     </div>
 
     <div class="right__history">
-      <!-- <app-message [chat$]="chat$"></app-message> -->
-      <ng-container *ngIf="chat$ | async as chat">
+      <ng-container *ngIf="updatedChat as chat; else elseMessageBlock">
         <app-message
           *ngFor="let message of chat.history"
           [message]="message"
           [chat]="chat"
         ></app-message>
       </ng-container>
+      <ng-template #elseMessageBlock>
+        <ng-container *ngIf="chat$ | async as chat">
+          <app-message
+            *ngFor="let message of chat.history"
+            [message]="message"
+            [chat]="chat"
+          ></app-message>
+        </ng-container>
+      </ng-template>
     </div>
     <div class="right__message-input">
       <app-message-input (newMessage)="sendMessage($event)"></app-message-input>

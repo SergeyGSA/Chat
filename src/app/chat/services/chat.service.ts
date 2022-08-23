@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core'
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import {map, Observable} from 'rxjs'
 import {environment} from 'src/environments/environment'
-import {IChat} from '../types/chat.interface'
+import {IChat, IMessage} from '../types/chat.interface'
 
 interface IJoke {
   categories: unknown[]
@@ -40,9 +40,16 @@ export class ChatService {
   }
 
   // Generates a random joke from https://api.chucknorris.io
-  public getChuckNorrisJoke(): Observable<string> {
-    return this.http
-      .get<IJoke>(`https://api.chucknorris.io/jokes/random`)
-      .pipe(map((joke: IJoke) => joke.value))
+  public getChuckNorrisJoke(): Observable<IMessage> {
+    return this.http.get<IJoke>(`https://api.chucknorris.io/jokes/random`).pipe(
+      map((joke: IJoke) => {
+        const chuckNorrisJoke: IMessage = {
+          text: joke.value,
+          date: Date.now(),
+          direction: 'to',
+        }
+        return chuckNorrisJoke
+      })
+    )
   }
 }

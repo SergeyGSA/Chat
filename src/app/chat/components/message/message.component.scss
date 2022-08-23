@@ -2,6 +2,8 @@
 @import 'src/app/chat/styles/mixins.scss';
 
 .message {
+  margin-bottom: 20px;
+
   &-from {
     display: flex;
     align-items: flex-end;
