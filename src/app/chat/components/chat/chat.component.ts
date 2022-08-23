@@ -1,5 +1,12 @@
-import {Component, OnInit} from '@angular/core'
-import {combineLatest, delay, map, Observable, switchMap} from 'rxjs'
+import {Component, OnDestroy, OnInit} from '@angular/core'
+import {
+  combineLatest,
+  delay,
+  map,
+  Observable,
+  Subscription,
+  switchMap,
+} from 'rxjs'
 import {ChatService} from '../../services/chat.service'
 import {IChat, IMessage} from '../../types/chat.interface'
 
@@ -8,12 +15,14 @@ import {IChat, IMessage} from '../../types/chat.interface'
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   protected chats$: Observable<IChat[]>
   protected chat$!: Observable<IChat>
   protected searchedContact: string = ''
   protected updatedChat!: IChat
   private chuckNorrisJoke$: Observable<IMessage>
+  private sendMessageSub!: Subscription
+  private chuckNorrisSub!: Subscription
 
   constructor(private readonly chatService: ChatService) {
     this.chats$ = this.chatService.getChats()
@@ -23,12 +32,20 @@ export class ChatComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    ;[this.sendMessageSub, this.chuckNorrisSub].forEach((sub: Subscription) => {
+      if (sub) {
+        sub.unsubscribe()
+      }
+    })
+  }
+
   protected getChatById(id: string): void {
     this.chat$ = this.chatService.getChatById(id)
   }
 
   protected sendMessage(message: IMessage): void {
-    this.chat$
+    this.sendMessageSub = this.chat$
       .pipe(
         map((chat: IChat) => {
           const updatedChat: IChat = {
@@ -59,7 +76,7 @@ export class ChatComponent implements OnInit {
   }
 
   private generateChuckNorrisMessage(): void {
-    combineLatest([this.chat$, this.chuckNorrisJoke$])
+    this.chuckNorrisSub = combineLatest([this.chat$, this.chuckNorrisJoke$])
       .pipe(
         map(([chat, joke]) => {
           const updatedChat: IChat = {

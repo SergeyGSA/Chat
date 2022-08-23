@@ -24,7 +24,17 @@ export class ChatService {
   constructor(private readonly http: HttpClient) {}
 
   public getChats(): Observable<IChat[]> {
-    return this.http.get<IChat[]>(`${environment.API_URL}chats`)
+    return this.http.get<IChat[]>(`${environment.API_URL}chats`).pipe(
+      // Sort chats by last message's date
+      map((chats: IChat[]) => {
+        return chats.sort((a: IChat, b: IChat) => {
+          return (
+            b.history[b.history.length - 1].date -
+            a.history[a.history.length - 1].date
+          )
+        })
+      })
+    )
   }
 
   public getChatById(id: string): Observable<IChat> {
