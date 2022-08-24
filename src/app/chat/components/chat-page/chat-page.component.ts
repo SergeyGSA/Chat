@@ -13,6 +13,7 @@ export class ChatPageComponent implements OnInit {
   protected chats$: Observable<IChat[]>
   protected chat$!: Observable<IChat>
   protected searchedContact: string = ''
+  protected isContactOpened = false
   private chuckNorrisJoke$: Observable<IMessage>
 
   constructor(private chatService: ChatService) {
@@ -49,6 +50,9 @@ export class ChatPageComponent implements OnInit {
   protected searchContact(searchValue: string): void {
     this.searchedContact = searchValue
   }
+
+  // For small screens
+  protected openContacts(): void {}
 
   private generateChuckNorrisMessage(): void {
     this.chat$ = combineLatest([this.chat$, this.chuckNorrisJoke$]).pipe(

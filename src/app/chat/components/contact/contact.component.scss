@@ -10,6 +10,10 @@
   cursor: pointer;
   transition: 0.5s;
 
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+
   &:hover {
     background-color: $light-grey;
   }
@@ -32,6 +36,10 @@
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 5px;
+
+      @media (max-width: 1200px) {
+        font-size: 16px;
+      }
     }
 
     &-message {
@@ -41,12 +49,25 @@
       white-space: nowrap;
       font-size: 16px;
       font-weight: 300;
+
+      @media (max-width: 1400px) {
+        max-width: 200px;
+      }
+
+      @media (max-width: 1200px) {
+        max-width: 150px;
+        font-size: 14px;
+      }
     }
   }
 
   &__date {
     span {
       font-size: 14px;
+
+      @media (max-width: 1200px) {
+        font-size: 12px;
+      }
     }
   }
 }

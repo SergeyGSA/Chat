@@ -32,7 +32,7 @@ export class MessageInputComponent implements OnInit {
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
-  protected sendMessage() {
+  protected sendMessage(): void {
     const message: IMessage = {
       text: this.messageForm.value.message,
       date: Date.now(),

@@ -1,36 +1,3 @@
-<!-- <ng-container *ngIf="chat$ | async as chat">
-  <ng-container *ngFor="let message of chat?.history">
-    <ng-template [ngIf]="message.direction === 'from'">
-      <div class="message message-from">
-        <span class="message-text message-from__text">
-          {{ message.text }}
-        </span>
-        <div class="message-date message-from__date">
-          {{ message.date | date: 'M/d/yy, h:mm a' }}
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template [ngIf]="message.direction === 'to'">
-      <div class="message message-to">
-        <img
-          [src]="chat.photo ? chat.photo : '../../../../assets/imgs/user.png'"
-          [alt]="chat.name ? chat.name : 'Sender'"
-          class="message-to__img"
-        />
-        <div class="message-wrapper">
-          <div class="message-text message-to__text">
-            {{ message.text }}
-          </div>
-          <div class="message-date message-to__date">
-            {{ message.date | date: 'M/d/yy, h:mm a' }}
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </ng-container>
-</ng-container> -->
-
 <ng-template [ngIf]="message.direction === 'from'">
   <div class="message message-from">
     <span class="message-text message-from__text">

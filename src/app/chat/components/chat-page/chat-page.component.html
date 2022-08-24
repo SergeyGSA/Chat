@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="left">
+  <div class="left" [ngClass]="{openedContacts: isContactOpened}">
     <div class="left__top">
       <div class="user-photo-wrapper">
         <img
@@ -25,8 +25,13 @@
     </div>
   </div>
 
-  <div class="right">
+  <div class="right" [ngClass]="{historyWhenContactsOpened: isContactOpened}">
     <div class="right__top">
+      <button
+        class="right__top-btn"
+        (click)="openContacts()"
+        [ngClass]="{buttonWhenContactsOpened: isContactOpened}"
+      ></button>
       <div class="user-photo-wrapper">
         <img
           class="right__top-img"
