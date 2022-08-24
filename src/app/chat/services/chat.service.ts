@@ -21,7 +21,7 @@ export class ChatService {
     headers: new HttpHeaders({'Content-Type': 'application/json'}),
   }
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   public getChats(): Observable<IChat[]> {
     return this.http.get<IChat[]>(`${environment.API_URL}chats`).pipe(

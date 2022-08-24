@@ -1,17 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core'
 import {IChat} from '../../types/chat.interface'
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent implements OnInit {
   @Input()
   public contact!: IChat
 
   @Output()
-  public chatId = new EventEmitter<string>()
+  public chatIdEvent = new EventEmitter<string>()
 
   constructor() {}
 
@@ -19,6 +27,6 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {}
 
   protected openHistory(id: string): void {
-    this.chatId.emit(id)
+    this.chatIdEvent.emit(id)
   }
 }

@@ -1,4 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core'
 import {FormControl, FormGroup} from '@angular/forms'
 import {IMessage} from '../../types/chat.interface'
 
@@ -9,12 +15,13 @@ interface IMessageForm {
   selector: 'app-message-input',
   templateUrl: './message-input.component.html',
   styleUrls: ['./message-input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageInputComponent implements OnInit {
   protected messageForm: FormGroup<IMessageForm>
 
   @Output()
-  public newMessage = new EventEmitter<IMessage>()
+  public newMessageEvent = new EventEmitter<IMessage>()
 
   constructor() {
     this.messageForm = new FormGroup<IMessageForm>({
@@ -32,7 +39,7 @@ export class MessageInputComponent implements OnInit {
       direction: 'from',
     }
 
-    this.newMessage.emit(message)
+    this.newMessageEvent.emit(message)
 
     this.messageForm.reset()
   }

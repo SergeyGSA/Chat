@@ -22,7 +22,7 @@
   }
 
   &__chats {
-    height: 50%;
+    height: calc(100vh - 145px);
     overflow-y: auto;
 
     &-heading {

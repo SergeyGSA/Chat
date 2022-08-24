@@ -1,3 +1,5 @@
+type DirectionType = 'from' | 'to'
+
 export interface IChat {
   id: string
   name: string
@@ -8,5 +10,5 @@ export interface IChat {
 export interface IMessage {
   text: string | undefined
   date: number
-  direction: string
+  direction: DirectionType
 }

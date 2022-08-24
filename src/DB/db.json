@@ -14,6 +14,11 @@
           "text": "I'm not fat, I'm big-boned!",
           "date": 1661103722549,
           "direction": "to"
+        },
+        {
+          "text": "hi",
+          "date": 1661339222267,
+          "direction": "from"
         }
       ]
     },
@@ -31,6 +36,11 @@
           "text": "Thanks man!",
           "date": 1661103722549,
           "direction": "to"
+        },
+        {
+          "text": "hi",
+          "date": 1661339245287,
+          "direction": "from"
         }
       ]
     }

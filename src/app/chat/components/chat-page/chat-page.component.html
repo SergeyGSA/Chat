@@ -19,7 +19,7 @@
             contact.name.toLowerCase().includes(searchedContact)
           "
           [contact]="contact"
-          (chatId)="getChatById($event)"
+          (chatIdEvent)="getChatById($event)"
         ></app-contact>
       </ng-container>
     </div>
@@ -40,25 +40,18 @@
     </div>
 
     <div class="right__history">
-      <ng-container *ngIf="updatedChat as chat; else elseMessageBlock">
+      <ng-container *ngIf="chat$ | async as chat">
         <app-message
           *ngFor="let message of chat.history"
           [message]="message"
           [chat]="chat"
         ></app-message>
       </ng-container>
-      <ng-template #elseMessageBlock>
-        <ng-container *ngIf="chat$ | async as chat">
-          <app-message
-            *ngFor="let message of chat.history"
-            [message]="message"
-            [chat]="chat"
-          ></app-message>
-        </ng-container>
-      </ng-template>
     </div>
     <div class="right__message-input">
-      <app-message-input (newMessage)="sendMessage($event)"></app-message-input>
+      <app-message-input
+        (newMessageEvent)="sendMessage($event)"
+      ></app-message-input>
     </div>
   </div>
 </div>

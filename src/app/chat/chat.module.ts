@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common'
 import {HttpClientModule} from '@angular/common/http'
 import {ReactiveFormsModule} from '@angular/forms'
 
-import {ChatComponent} from 'src/app/chat/components/chat/chat.component'
+import {ChatPageComponent} from 'src/app/chat/components/chat-page/chat-page.component'
 import {SearchComponent} from 'src/app/chat/components/search/search.component'
 import {ContactComponent} from './components/contact/contact.component'
 import {MessageComponent} from './components/message/message.component'
@@ -11,7 +11,7 @@ import {MessageInputComponent} from './components/message-input/message-input.co
 
 @NgModule({
   declarations: [
-    ChatComponent,
+    ChatPageComponent,
     SearchComponent,
     ContactComponent,
     MessageComponent,
