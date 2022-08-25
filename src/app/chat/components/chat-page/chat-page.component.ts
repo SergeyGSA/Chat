@@ -30,6 +30,7 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   protected chatInstance$ = new BehaviorSubject<IChat | null>(null)
   protected searchedContact: string = ''
   protected isNotificationActive$ = new BehaviorSubject<boolean>(false)
+  protected isContactsOpen$ = new BehaviorSubject<boolean>(false)
   private sub$ = new Subject<void>()
 
   @ViewChild('chatHistory')
@@ -89,6 +90,11 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   protected searchContact(searchValue: string): void {
     this.searchedContact = searchValue
+  }
+
+  protected toggleContacts(): void {
+    const isOpen = this.isContactsOpen$.getValue()
+    this.isContactsOpen$.next(!isOpen)
   }
 
   private refreshChats(): void {

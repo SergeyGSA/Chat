@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  OnInit,
   Output,
 } from '@angular/core'
 import {FormControl, FormGroup} from '@angular/forms'
@@ -17,7 +16,7 @@ interface IMessageForm {
   styleUrls: ['./message-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageInputComponent implements OnInit {
+export class MessageInputComponent {
   protected messageForm: FormGroup<IMessageForm>
 
   @Output()
@@ -28,9 +27,6 @@ export class MessageInputComponent implements OnInit {
       message: new FormControl('', {nonNullable: true}),
     })
   }
-
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
 
   protected sendMessage(): void {
     const message: IMessage = {

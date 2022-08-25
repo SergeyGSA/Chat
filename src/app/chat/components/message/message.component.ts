@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
 import {IChat, IMessage} from '../../types/chat.interface'
 
 @Component({
@@ -7,7 +7,7 @@ import {IChat, IMessage} from '../../types/chat.interface'
   styleUrls: ['./message.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent {
   @Input()
   public message!: IMessage
 
@@ -15,7 +15,4 @@ export class MessageComponent implements OnInit {
   public chat!: IChat
 
   constructor() {}
-
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
 }

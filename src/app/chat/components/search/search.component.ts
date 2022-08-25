@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
@@ -12,14 +11,11 @@ import {
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
   @Output()
   public searchValueEvent = new EventEmitter<string>()
 
   constructor() {}
-
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
 
   protected searchContact(event: Event): void {
     const target = event.target as HTMLInputElement

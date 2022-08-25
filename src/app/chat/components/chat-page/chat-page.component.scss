@@ -124,7 +124,7 @@
     overflow-y: auto;
   }
 
-  // ======== Custom scrollbar =========
+  // ======== Custom scrollbar for Chrome =========
   &__history::-webkit-scrollbar {
     width: 0.6vw;
   }
@@ -136,7 +136,7 @@
   &__history::-webkit-scrollbar-track {
     background-color: #fff;
   }
-  // ======== /Custom scrollbar =========
+  // ======== /Custom scrollbar for Chrome =========
 
   &__message-input {
     border-top: 1px solid #a4a4a4;
@@ -178,15 +178,7 @@
   display: flex;
 }
 
-// .openedContacts {
-//   display: block;
-//   width: 35%;
-// }
-
-// .historyWhenContactsOpened {
-//   width: 65%;
-// }
-
-// .buttonWhenContactsOpened {
-//   display: none;
-// }
+.openedContacts {
+  display: block;
+  width: 40%;
+}

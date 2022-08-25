@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core'
 import {IChat} from '../../types/chat.interface'
@@ -14,7 +13,7 @@ import {IChat} from '../../types/chat.interface'
   styleUrls: ['./contact.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent {
   @Input()
   public contact!: IChat
 
@@ -22,9 +21,6 @@ export class ContactComponent implements OnInit {
   public chatIdEvent = new EventEmitter<string>()
 
   constructor() {}
-
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
 
   protected openHistory(id: string): void {
     this.chatIdEvent.emit(id)
