@@ -63,6 +63,52 @@
           "direction": "to"
         }
       ]
+    },
+    {
+      "id": "003",
+      "name": "Kate",
+      "photo": "https://kartinkin.net/uploads/posts/2022-03/1647121567_1-kartinkin-net-p-kartinki-litso-devushki-1.png",
+      "history": []
+    },
+    {
+      "id": "004",
+      "name": "Jon Snow",
+      "photo": "https://i.ytimg.com/vi/1MFX1axYqOo/maxresdefault.jpg",
+      "history": [
+        {
+          "text": "Hello! How are you?",
+          "date": 1661103649282,
+          "direction": "from"
+        },
+        {
+          "text": "I'm fine! Thanks",
+          "date": 1661103722549,
+          "direction": "to"
+        }
+      ]
+    },
+    {
+      "id": "005",
+      "name": "Justin",
+      "photo": "https://img.freepik.com/free-photo/no-problem-concept-bearded-man-makes-okay-gesture-has-everything-control-all-fine-gesture-wears-spectacles-jumper-poses-against-pink-wall-says-i-got-this-guarantees-something_273609-42817.jpg",
+      "history": [
+        {
+          "text": "Hello! How are you?",
+          "date": 1661103649282,
+          "direction": "from"
+        },
+        {
+          "text": "I'm fine! Thanks",
+          "date": 1661103722549,
+          "direction": "to"
+        }
+      ]
+    },
+    {
+      "id": "006",
+      "name": "Robert",
+      "photo": "https://i.insider.com/5dcc135ce94e86714253af21?width=1000&format=jpeg&auto=webp",
+      "history": []
     }
   ]
 }
