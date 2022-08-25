@@ -1,8 +1,11 @@
 import {
+  AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core'
 import {BehaviorSubject, delay, Subject, switchMap, tap, takeUntil} from 'rxjs'
 import {ChatService} from '../../services/chat.service'
@@ -14,16 +17,25 @@ import {IChat, IMessage} from '../../types/chat.interface'
   styleUrls: ['./chat-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatPageComponent implements OnInit, OnDestroy {
+export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   protected chats$ = new BehaviorSubject<IChat[] | null>(null)
   protected chatInstance$ = new BehaviorSubject<IChat | null>(null)
   protected searchedContact: string = ''
   private sub$ = new Subject<void>()
 
+  @ViewChild('chatHistory')
+  private chatHistory!: ElementRef
+
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
     this.refreshChats()
+  }
+
+  ngAfterViewChecked(): void {
+    // Moved scroll to bottom when get a new message
+    const history = this.chatHistory.nativeElement as HTMLElement
+    history.scrollTo(0, history.scrollHeight)
   }
 
   ngOnDestroy(): void {

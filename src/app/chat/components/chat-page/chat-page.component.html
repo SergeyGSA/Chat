@@ -40,7 +40,7 @@
       </span>
     </div>
 
-    <div class="right__history">
+    <div class="right__history" #chatHistory>
       <ng-container *ngIf="chatInstance$ | async as chat">
         <app-message
           *ngFor="let message of chat.history"
