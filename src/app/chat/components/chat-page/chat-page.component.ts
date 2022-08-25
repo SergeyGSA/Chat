@@ -18,20 +18,13 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   protected chats$ = new BehaviorSubject<IChat[] | null>(null)
   protected chatInstance$ = new BehaviorSubject<IChat | null>(null)
   protected searchedContact: string = ''
-  protected isContactOpened = false
   private sub$ = new Subject<void>()
 
-  constructor(private chatService: ChatService) {
-    this.chatService
-      .getChats()
-      .pipe(takeUntil(this.sub$))
-      .subscribe((chats: IChat[]) => {
-        this.chats$.next(chats)
-      })
-  }
+  constructor(private chatService: ChatService) {}
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.refreshChats()
+  }
 
   ngOnDestroy(): void {
     this.sub$.next()
@@ -57,7 +50,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
       this.chatService
         .sendMessage(updatedChat)
         .pipe(
-          tap((chatResponse: IChat) => this.chatInstance$.next(chatResponse)),
+          tap((chatResponse: IChat) => {
+            this.chatInstance$.next(chatResponse)
+            this.refreshChats() // Refresh contacts
+          }),
           switchMap((chatResponse) => {
             return this.chatService.getChuckNorrisJoke().pipe(
               delay(2000),
@@ -71,7 +67,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
             )
           })
         )
-        .pipe(takeUntil(this.sub$))
+        .pipe(
+          takeUntil(this.sub$),
+          tap(() => this.refreshChats()) // Refresh contacts
+        )
         .subscribe((chat: IChat) => {
           this.chatInstance$.next(chat)
         })
@@ -80,5 +79,14 @@ export class ChatPageComponent implements OnInit, OnDestroy {
 
   protected searchContact(searchValue: string): void {
     this.searchedContact = searchValue
+  }
+
+  private refreshChats(): void {
+    this.chatService
+      .getChats()
+      .pipe(takeUntil(this.sub$))
+      .subscribe((chats: IChat[]) => {
+        this.chats$.next(chats)
+      })
   }
 }
