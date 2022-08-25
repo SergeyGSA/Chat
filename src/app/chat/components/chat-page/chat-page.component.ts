@@ -1,5 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {combineLatest, delay, map, Observable, switchMap, tap} from 'rxjs'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
+import {BehaviorSubject, delay, Subject, switchMap, tap, takeUntil} from 'rxjs'
 import {ChatService} from '../../services/chat.service'
 import {IChat, IMessage} from '../../types/chat.interface'
 
@@ -9,66 +14,71 @@ import {IChat, IMessage} from '../../types/chat.interface'
   styleUrls: ['./chat-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatPageComponent implements OnInit {
-  protected chats$: Observable<IChat[]>
-  protected chat$!: Observable<IChat>
+export class ChatPageComponent implements OnInit, OnDestroy {
+  protected chats$ = new BehaviorSubject<IChat[] | null>(null)
+  protected chatInstance$ = new BehaviorSubject<IChat | null>(null)
   protected searchedContact: string = ''
   protected isContactOpened = false
-  private chuckNorrisJoke$: Observable<IMessage>
+  private sub$ = new Subject<void>()
 
   constructor(private chatService: ChatService) {
-    this.chats$ = this.chatService.getChats()
-    this.chuckNorrisJoke$ = this.chatService.getChuckNorrisJoke()
+    this.chatService
+      .getChats()
+      .pipe(takeUntil(this.sub$))
+      .subscribe((chats: IChat[]) => {
+        this.chats$.next(chats)
+      })
   }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    this.sub$.next()
+    this.sub$.complete()
+  }
+
   protected getChatById(id: string): void {
-    this.chat$ = this.chatService.getChatById(id)
+    this.chatService
+      .getChatById(id)
+      .pipe(takeUntil(this.sub$))
+      .subscribe((chat: IChat) => {
+        this.chatInstance$.next(chat)
+      })
   }
 
   protected sendMessage(message: IMessage): void {
-    this.chat$ = this.chat$.pipe(
-      map((chat: IChat) => {
-        const updatedChat: IChat = {
-          id: chat.id,
-          name: chat.name,
-          photo: chat.photo,
-          history: [...chat.history, message],
-        }
-        return updatedChat
-      }),
-      switchMap((updatedChat: IChat) =>
-        this.chatService.sendMessage(updatedChat)
-      ),
-      // tap(() => this.generateChuckNorrisMessage())
-      tap(() => console.log('work'))
-    )
+    const instance = this.chatInstance$.getValue()
+    if (instance) {
+      const updatedChat: IChat = {
+        ...instance,
+        history: [...instance.history, message],
+      }
+      this.chatService
+        .sendMessage(updatedChat)
+        .pipe(
+          tap((chatResponse: IChat) => this.chatInstance$.next(chatResponse)),
+          switchMap((chatResponse) => {
+            return this.chatService.getChuckNorrisJoke().pipe(
+              delay(2000),
+              switchMap((joke) => {
+                const updatedChatNew: IChat = {
+                  ...chatResponse,
+                  history: [...chatResponse.history, joke],
+                }
+                return this.chatService.sendMessage(updatedChatNew)
+              })
+            )
+          })
+        )
+        .pipe(takeUntil(this.sub$))
+        .subscribe((chat: IChat) => {
+          this.chatInstance$.next(chat)
+        })
+    }
   }
 
   protected searchContact(searchValue: string): void {
     this.searchedContact = searchValue
-  }
-
-  // For small screens
-  protected openContacts(): void {}
-
-  private generateChuckNorrisMessage(): void {
-    this.chat$ = combineLatest([this.chat$, this.chuckNorrisJoke$]).pipe(
-      map(([chat, joke]) => {
-        const updatedChat: IChat = {
-          id: chat.id,
-          name: chat.name,
-          photo: chat.photo,
-          history: [...chat.history, joke],
-        }
-        return updatedChat
-      }),
-      delay(1000),
-      switchMap((updatedChat: IChat) =>
-        this.chatService.sendMessage(updatedChat)
-      )
-    )
   }
 }

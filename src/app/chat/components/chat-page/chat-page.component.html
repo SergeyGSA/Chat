@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="left" [ngClass]="{openedContacts: isContactOpened}">
+  <div class="left">
     <div class="left__top">
       <div class="user-photo-wrapper">
         <img
@@ -25,27 +25,23 @@
     </div>
   </div>
 
-  <div class="right" [ngClass]="{historyWhenContactsOpened: isContactOpened}">
+  <div class="right">
     <div class="right__top">
-      <button
-        class="right__top-btn"
-        (click)="openContacts()"
-        [ngClass]="{buttonWhenContactsOpened: isContactOpened}"
-      ></button>
+      <button class="right__top-btn"></button>
       <div class="user-photo-wrapper">
         <img
           class="right__top-img"
-          [src]="(chat$ | async)?.photo ?? '../../../../assets/imgs/user.png'"
+          [src]="(chatInstance$ | async)?.photo ?? '../../../../assets/imgs/user.png'"
           alt=""
         />
       </div>
       <span class="right__top-heading">
-        {{ (chat$ | async)?.name }}
+        {{ (chatInstance$ | async)?.name }}
       </span>
     </div>
 
     <div class="right__history">
-      <ng-container *ngIf="chat$ | async as chat">
+      <ng-container *ngIf="chatInstance$ | async as chat">
         <app-message
           *ngFor="let message of chat.history"
           [message]="message"
