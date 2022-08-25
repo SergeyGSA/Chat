@@ -57,7 +57,7 @@
   </div>
   <div
     class="message-notification"
-    [ngClass]="{'notification-active': isActive$ | async}"
+    [ngClass]="{'notification-active': isNotificationActive$ | async}"
   >
     <img src="../../../../assets/imgs/bell.svg" alt="bell" />
     You have a new message

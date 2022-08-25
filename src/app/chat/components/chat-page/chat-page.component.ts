@@ -21,7 +21,7 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   protected chats$ = new BehaviorSubject<IChat[] | null>(null)
   protected chatInstance$ = new BehaviorSubject<IChat | null>(null)
   protected searchedContact: string = ''
-  protected isActive$ = new BehaviorSubject<boolean>(false)
+  protected isNotificationActive$ = new BehaviorSubject<boolean>(false)
   private sub$ = new Subject<void>()
 
   @ViewChild('chatHistory')
@@ -88,8 +88,8 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
           next: (chat: IChat) => this.chatInstance$.next(chat),
           error: (err) => console.error(err),
           complete: () => {
-            this.isActive$.next(true)
-            setTimeout(() => this.isActive$.next(false), 3000)
+            this.isNotificationActive$.next(true)
+            setTimeout(() => this.isNotificationActive$.next(false), 3000)
           },
         })
     }
