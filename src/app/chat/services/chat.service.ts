@@ -41,7 +41,7 @@ export class ChatService {
     return this.http.get<IChat>(`${environment.API_URL}chats/${id}`)
   }
 
-  public sendMessage(chat: IChat) {
+  public sendMessage(chat: IChat): Observable<IChat> {
     return this.http.patch<IChat>(
       `${environment.API_URL}chats/${chat.id}`,
       chat,

@@ -21,6 +21,7 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   protected chats$ = new BehaviorSubject<IChat[] | null>(null)
   protected chatInstance$ = new BehaviorSubject<IChat | null>(null)
   protected searchedContact: string = ''
+  protected isActive$ = new BehaviorSubject<boolean>(false)
   private sub$ = new Subject<void>()
 
   @ViewChild('chatHistory')
@@ -68,7 +69,7 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
           }),
           switchMap((chatResponse) => {
             return this.chatService.getChuckNorrisJoke().pipe(
-              delay(2000),
+              delay(5000),
               switchMap((joke) => {
                 const updatedChatNew: IChat = {
                   ...chatResponse,
@@ -83,8 +84,13 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
           takeUntil(this.sub$),
           tap(() => this.refreshChats()) // Refresh contacts
         )
-        .subscribe((chat: IChat) => {
-          this.chatInstance$.next(chat)
+        .subscribe({
+          next: (chat: IChat) => this.chatInstance$.next(chat),
+          error: (err) => console.error(err),
+          complete: () => {
+            this.isActive$.next(true)
+            setTimeout(() => this.isActive$.next(false), 3000)
+          },
         })
     }
   }

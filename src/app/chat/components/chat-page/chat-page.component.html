@@ -55,4 +55,11 @@
       ></app-message-input>
     </div>
   </div>
+  <div
+    class="message-notification"
+    [ngClass]="{'notification-active': isActive$ | async}"
+  >
+    <img src="../../../../assets/imgs/bell.svg" alt="bell" />
+    You have a new message
+  </div>
 </div>

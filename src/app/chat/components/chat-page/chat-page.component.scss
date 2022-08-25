@@ -154,6 +154,30 @@
   @include circleCheck;
 }
 
+.message-notification {
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  top: 3%;
+  right: 1%;
+  width: 270px;
+  height: 50px;
+  background-color: $dark-grey;
+  color: #fff;
+  padding: 10px 10px;
+  border-radius: 20px;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.notification-active {
+  display: flex;
+}
+
 // .openedContacts {
 //   display: block;
 //   width: 35%;
