@@ -2,6 +2,8 @@
 @import 'src/app/chat/styles/mixins.scss';
 
 .message {
+  margin-bottom: 20px;
+
   &-from {
     display: flex;
     align-items: flex-end;
@@ -36,11 +38,19 @@
     max-width: 500px;
     font-size: 16px;
     line-height: 22px;
+
+    @media (max-width: 1200px) {
+      font-size: 14px;
+    }
   }
 
   &-date {
     font-size: 12px;
     font-weight: 300;
     margin-top: 10px;
+
+    @media (max-width: 1200px) {
+      font-size: 10px;
+    }
   }
 }

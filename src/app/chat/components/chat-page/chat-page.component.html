@@ -1,0 +1,65 @@
+<div class="wrapper">
+  <div class="left" [ngClass]="{openedContacts: isContactsOpen$ | async}">
+    <div class="left__top">
+      <div class="user-photo-wrapper">
+        <img
+          src="../../../../assets/imgs/user.png"
+          alt=""
+          class="left__top-user"
+        />
+      </div>
+      <app-search (searchValueEvent)="searchContact($event)"></app-search>
+    </div>
+    <div class="left__chats">
+      <span class="left__chats-heading">Chats</span>
+      <ng-container *ngFor="let contact of chats$ | async">
+        <app-contact
+          *ngIf="
+            searchedContact === '' ||
+            contact.name.toLowerCase().includes(searchedContact)
+          "
+          [contact]="contact"
+          (chatIdEvent)="getChatById($event)"
+        ></app-contact>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="right__top">
+      <button class="right__top-btn" (click)="toggleContacts()"></button>
+      <div class="user-photo-wrapper">
+        <img
+          class="right__top-img"
+          [src]="(chatInstance$ | async)?.photo ?? '../../../../assets/imgs/user.png'"
+          alt=""
+        />
+      </div>
+      <span class="right__top-heading">
+        {{ (chatInstance$ | async)?.name }}
+      </span>
+    </div>
+
+    <div class="right__history" #chatHistory>
+      <ng-container *ngIf="chatInstance$ | async as chat">
+        <app-message
+          *ngFor="let message of chat.history"
+          [message]="message"
+          [chat]="chat"
+        ></app-message>
+      </ng-container>
+    </div>
+    <div class="right__message-input">
+      <app-message-input
+        (newMessageEvent)="sendMessage($event)"
+      ></app-message-input>
+    </div>
+  </div>
+  <div
+    class="message-notification"
+    [ngClass]="{'notification-active': isNotificationActive$ | async}"
+  >
+    <img src="../../../../assets/imgs/bell.svg" alt="bell" />
+    You have a new message
+  </div>
+</div>

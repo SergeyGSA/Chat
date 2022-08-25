@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
+import {IChat} from '../../types/chat.interface'
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent {
+  @Input()
+  public contact!: IChat
 
-  constructor() { }
+  @Output()
+  public chatIdEvent = new EventEmitter<string>()
 
-  ngOnInit(): void {
+  constructor() {}
+
+  protected openHistory(id: string): void {
+    this.chatIdEvent.emit(id)
   }
-
 }

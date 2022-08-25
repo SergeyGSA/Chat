@@ -1,0 +1,184 @@
+@import 'src/app/chat/styles/variables.scss';
+@import 'src/app/chat/styles/mixins.scss';
+
+.wrapper {
+  display: flex;
+  position: relative;
+}
+
+.left {
+  width: 35%;
+  border-right: 1px solid #a4a4a4;
+
+  @media (max-width: 992px) {
+    display: none;
+  }
+
+  &__top {
+    background-color: $grey;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid #a4a4a4;
+
+    &-user {
+      @include roundedPhoto;
+    }
+  }
+
+  &__chats {
+    height: calc(100vh - 145px);
+    overflow-y: auto;
+
+    &-heading {
+      display: block;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 40px 0 50px 20px;
+      color: #0d6efd;
+
+      @media (max-width: 1200px) {
+        font-size: 18px;
+      }
+    }
+  }
+
+  // ======== Custom scrollbar =========
+  &__chats::-webkit-scrollbar {
+    width: 0.6vw;
+  }
+
+  &__chats::-webkit-scrollbar-thumb {
+    background-color: $dark-grey;
+  }
+
+  &__chats::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  // ======== /Custom scrollbar =========
+}
+
+.right {
+  width: 65%;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+
+  &__top {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color: $grey;
+    border-bottom: 1px solid #a4a4a4;
+    padding-left: 20px;
+
+    &-btn {
+      display: none;
+      outline: none;
+      border: none;
+      margin-right: 20px;
+      position: relative;
+      height: 3px;
+      width: 20px;
+      background-color: $dark-grey;
+
+      &::before {
+        content: '';
+        height: 3px;
+        width: 20px;
+        background-color: $dark-grey;
+        position: absolute;
+        top: -5px;
+        left: 0;
+      }
+
+      &::after {
+        content: '';
+        height: 3px;
+        width: 20px;
+        background-color: $dark-grey;
+        position: absolute;
+        top: 5px;
+        left: 0;
+      }
+
+      @media (max-width: 992px) {
+        display: block;
+      }
+    }
+
+    &-img {
+      @include roundedPhoto;
+    }
+
+    &-heading {
+      margin-left: 10px;
+      font-weight: 700;
+    }
+  }
+
+  &__history {
+    padding: 20px;
+    height: calc(100vh - 80px - 113px);
+    overflow-y: auto;
+  }
+
+  // ======== Custom scrollbar for Chrome =========
+  &__history::-webkit-scrollbar {
+    width: 0.6vw;
+  }
+
+  &__history::-webkit-scrollbar-thumb {
+    background-color: $dark-grey;
+  }
+
+  &__history::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  // ======== /Custom scrollbar for Chrome =========
+
+  &__message-input {
+    border-top: 1px solid #a4a4a4;
+    background-color: $grey;
+    padding: 25px 15px 26px;
+
+    @media (max-width: 1200px) {
+      padding: 25px 15px 29px;
+    }
+  }
+}
+
+.user-photo-wrapper {
+  @include roundedPhoto;
+  @include circleCheck;
+}
+
+.message-notification {
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  bottom: 2%;
+  right: 1%;
+  width: 270px;
+  height: 50px;
+  background-color: $dark-grey;
+  color: #fff;
+  padding: 10px 10px;
+  border-radius: 20px;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.notification-active {
+  display: flex;
+}
+
+.openedContacts {
+  display: block;
+  width: 40%;
+}
