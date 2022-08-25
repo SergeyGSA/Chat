@@ -14,13 +14,19 @@
       <span class="contact__data-name">{{ contact.name }}</span>
       <span class="contact__data-message">
         <!-- Get a last message from array of messages -->
-        {{ contact.history.slice(-1)[0].text }}
+        {{ contact.history.length ? contact.history.slice(-1)[0].text : '' }}
       </span>
     </div>
   </div>
 
   <div class="contact__date">
     <!-- Get a date of last message from array of messages -->
-    <span>{{ contact.history.slice(-1)[0].date | date }}</span>
+    <span>
+      {{
+        contact.history.length
+          ? (contact.history.slice(-1)[0].date | date)
+          : null
+      }}
+    </span>
   </div>
 </div>

@@ -29,8 +29,8 @@ export class ChatService {
       map((chats: IChat[]) => {
         return chats.sort((a: IChat, b: IChat) => {
           return (
-            b.history[b.history.length - 1].date -
-            a.history[a.history.length - 1].date
+            b.history[b.history.length - 1]?.date -
+            a.history[a.history.length - 1]?.date
           )
         })
       })
