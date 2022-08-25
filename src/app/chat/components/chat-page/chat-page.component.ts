@@ -7,7 +7,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
-import {BehaviorSubject, delay, Subject, switchMap, tap, takeUntil} from 'rxjs'
+import {
+  BehaviorSubject,
+  delay,
+  Subject,
+  switchMap,
+  tap,
+  takeUntil,
+  Observable,
+} from 'rxjs'
 import {ChatService} from '../../services/chat.service'
 import {IChat, IMessage} from '../../types/chat.interface'
 
@@ -56,36 +64,20 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   protected sendMessage(message: IMessage): void {
     const instance = this.chatInstance$.getValue()
     if (instance) {
-      const updatedChat: IChat = {
-        ...instance,
-        history: [...instance.history, message],
-      }
       this.chatService
-        .sendMessage(updatedChat)
+        .sendMessage(this.updateToLastHistoryChat(message, instance))
         .pipe(
           tap((chatResponse: IChat) => {
-            this.chatInstance$.next(chatResponse)
-            this.refreshChats() // Refresh contacts
+            this.handleSendMessageResponse(chatResponse)
           }),
-          switchMap((chatResponse) => {
-            return this.chatService.getChuckNorrisJoke().pipe(
-              delay(5000),
-              switchMap((joke) => {
-                const updatedChatNew: IChat = {
-                  ...chatResponse,
-                  history: [...chatResponse.history, joke],
-                }
-                return this.chatService.sendMessage(updatedChatNew)
-              })
-            )
-          })
-        )
-        .pipe(
-          takeUntil(this.sub$),
-          tap(() => this.refreshChats()) // Refresh contacts
+          delay(10000),
+          switchMap((chatResponse) => this.chuckNorrisResponse(chatResponse)),
+          takeUntil(this.sub$)
         )
         .subscribe({
-          next: (chat: IChat) => this.chatInstance$.next(chat),
+          next: (chat: IChat) => {
+            this.handleSendMessageResponse(chat)
+          },
           error: (err) => console.error(err),
           complete: () => {
             this.isNotificationActive$.next(true)
@@ -106,5 +98,34 @@ export class ChatPageComponent implements OnInit, AfterViewChecked, OnDestroy {
       .subscribe((chats: IChat[]) => {
         this.chats$.next(chats)
       })
+  }
+
+  private updateToLastHistoryChat(message: IMessage, chat: IChat): IChat {
+    return {
+      ...chat,
+      history: [...chat.history, message],
+    }
+  }
+
+  private shouldUpdateChat(chatResponse: IChat): boolean {
+    const instance = this.chatInstance$.getValue()
+    return chatResponse.id === instance?.id
+  }
+
+  private handleSendMessageResponse(chat: IChat): void {
+    if (this.shouldUpdateChat(chat)) {
+      this.chatInstance$.next(chat)
+    }
+    this.refreshChats()
+  }
+
+  private chuckNorrisResponse(latestChat: IChat): Observable<IChat> {
+    return this.chatService.getChuckNorrisJoke().pipe(
+      switchMap((joke) => {
+        return this.chatService.sendMessage(
+          this.updateToLastHistoryChat(joke, latestChat)
+        )
+      })
+    )
   }
 }
