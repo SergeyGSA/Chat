@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "json:server": "json-server --watch src/DB/db.json",
-    "heroku-postbuild": "ng build --prod"
+    "heroku-postbuild": "ng build"
   },
   "private": true,
   "dependencies": {
