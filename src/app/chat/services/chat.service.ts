@@ -18,7 +18,7 @@ interface IJoke {
 })
 export class ChatService {
   constructor(private http: HttpClient) {
-    if (!this.getDataFromLocalStorage()) {
+    if (!this.isLocalStorageHaveChats()) {
       this.setDataToLocalStorage(mockChats.chats) // Set mock chats in local storage
     }
   }
@@ -91,5 +91,9 @@ export class ChatService {
     }
 
     return of(chats)
+  }
+
+  private isLocalStorageHaveChats(): boolean {
+    return !!window.localStorage.getItem('chats')
   }
 }
