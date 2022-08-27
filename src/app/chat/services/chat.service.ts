@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core'
-import {HttpClient, HttpHeaders} from '@angular/common/http'
-import {map, Observable} from 'rxjs'
-import {environment} from 'src/environments/environment'
+import {HttpClient} from '@angular/common/http'
+import {map, Observable, of} from 'rxjs'
 import {IChat, IMessage} from '../types/chat.interface'
+import * as mockChats from '../../../DB/db'
 
 interface IJoke {
   categories: unknown[]
@@ -17,17 +17,17 @@ interface IJoke {
   providedIn: 'root',
 })
 export class ChatService {
-  private readonly httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  constructor(private http: HttpClient) {
+    if (!this.getDataFromLocalStorage()) {
+      this.setDataToLocalStorage(mockChats.chats) // Set mock chats in local storage
+    }
   }
 
-  constructor(private http: HttpClient) {}
-
   public getChats(): Observable<IChat[]> {
-    return this.http.get<IChat[]>(`${environment.API_URL}chats`).pipe(
+    return this.getDataFromLocalStorage().pipe(
       // Sort chats by last message's date
       map((chats: IChat[]) => {
-        return chats.sort((a: IChat, b: IChat) => {
+        return chats?.sort((a: IChat, b: IChat) => {
           return (
             b.history[b.history.length - 1]?.date -
             a.history[a.history.length - 1]?.date
@@ -38,14 +38,29 @@ export class ChatService {
   }
 
   public getChatById(id: string): Observable<IChat> {
-    return this.http.get<IChat>(`${environment.API_URL}chats/${id}`)
+    return this.getDataFromLocalStorage().pipe(
+      map((chats: IChat[]) => {
+        return chats.filter((chat: IChat) => chat.id === id)[0]
+      })
+    )
   }
 
   public sendMessage(chat: IChat): Observable<IChat> {
-    return this.http.patch<IChat>(
-      `${environment.API_URL}chats/${chat.id}`,
-      chat,
-      this.httpOptions
+    return this.getDataFromLocalStorage().pipe(
+      map((chats: IChat[]) => {
+        // Find chat that we need to update
+        const currentChat = chats.filter(
+          (chatFromServer: IChat) => chatFromServer.id === chat.id
+        )[0]
+
+        currentChat.history.push(chat.history[chat.history.length - 1]) // Add new message to chat instance
+
+        const currentChatIndex = chats.indexOf(currentChat)
+        chats.splice(currentChatIndex, 1, currentChat) // Update chats array, replace chat with the chat instance
+        this.setDataToLocalStorage(chats)
+
+        return currentChat
+      })
     )
   }
 
@@ -61,5 +76,20 @@ export class ChatService {
         return chuckNorrisJoke
       })
     )
+  }
+
+  private setDataToLocalStorage(chats: IChat[]): void {
+    const data = JSON.stringify(chats)
+    window.localStorage.setItem('chats', data)
+  }
+
+  private getDataFromLocalStorage(): Observable<IChat[]> {
+    const data = window.localStorage.getItem('chats')
+    let chats
+    if (data) {
+      chats = JSON.parse(data)
+    }
+
+    return of(chats)
   }
 }
